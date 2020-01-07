@@ -9,12 +9,13 @@ export function getAuthFormHTML() {
             <input type="password" id="auth__password" required>
             <label for="auth__password">Пароль</label>
         </div>
-        <button type="submit" class="mui-btn mui-btn--raised">Войти</button>
+        <button type="submit" id="login" class="mui-btn mui-btn--raised">Войти</button>
+        <button type="submit" id="signup" class="mui-btn mui-btn--raised btn-blue">Зарегистрироваться</button>
     </form>
     `
 }
 
-export async function authWithEmailAndPassword(email, password) {
+export async function logIn(email, password) {
   const API_KEY = 'AIzaSyDUQwGPhzA2Pq3ZNLhaMZdy3bZ5_N01DZw'
   const res = await fetch(
     `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
@@ -27,10 +28,33 @@ export async function authWithEmailAndPassword(email, password) {
     }
   )
   const data = await res.json()
+  setLocalStorage(data)
+  return data.idToken
+}
 
+export async function signUp(email, password) {
+  const API_KEY = 'AIzaSyDUQwGPhzA2Pq3ZNLhaMZdy3bZ5_N01DZw'
+  const res = await fetch(
+    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ email, password, returnSecureToken: true }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  const data = await res.json()
+  setLocalStorage(data)
+  return data.idToken
+}
+
+function setLocalStorage(data) {
   if (data.idToken) {
     localStorage.setItem('epp-mini-blog/token', data.idToken)
+    localStorage.setItem(
+      'epp-mini-blog/author',
+      data.email.replace(/@.*$/i, '')
+    )
   }
-
-  return data.idToken
 }

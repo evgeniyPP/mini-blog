@@ -13,3 +13,8 @@ export function createModal(title, content) {
 
   mui.overlay('on', modal)
 }
+
+export function closeModal() {
+  const modal = document.querySelector('.modal')
+  mui.overlay('off', modal)
+}

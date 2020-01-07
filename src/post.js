@@ -12,7 +12,6 @@ export class Post {
     )
     const data = await res.json()
     post.id = data.name
-    addToLocalStorage(post)
     Post.renderList()
     return post
   }
@@ -22,13 +21,14 @@ export class Post {
     const token = localStorage.getItem('epp-mini-blog/token')
     if (navigator.onLine && token) {
       allPosts = await Post.fetch(token)
+      localStorage.setItem('epp-mini-blog/posts', JSON.stringify(allPosts))
     } else {
       allPosts = getPostsFromLocalStorage()
     }
 
     const html = allPosts.length
       ? allPosts.map(toCard).join('')
-      : `<div class="mui--text-headline">У Вас нет постов. Создайте один!</div>`
+      : `<div class="mui--text-headline">Чтобы читать ленту, войдите в аккаунт или создайте новый</div>`
 
     const list = document.getElementById('posts-list')
     list.innerHTML = html
@@ -42,27 +42,12 @@ export class Post {
       `https://mini-blog-d70e8.firebaseio.com/posts.json?auth=${token}`
     )
     const data = await res.json()
+
     if (data && data.error) {
       return Promise.resolve(`<p class="error">${data.error}</p>`)
     }
     return data ? Object.keys(data).map(id => ({ ...data[id], id })) : []
   }
-
-  static listToHTML(posts) {
-    return posts.length
-      ? `
-        <ul class="modal__post-list">
-            ${posts.map(post => toCard(post)).join('')}
-        </ul>
-        `
-      : `<p>Постов пока нет</p>`
-  }
-}
-
-function addToLocalStorage(post) {
-  const allPosts = getPostsFromLocalStorage()
-  allPosts.push(post)
-  localStorage.setItem('epp-mini-blog/posts', JSON.stringify(allPosts))
 }
 
 function getPostsFromLocalStorage() {
@@ -73,6 +58,9 @@ function toCard(post) {
   return `
     <div class="post">
         <div class="mui--text-headline post__title">${post.title}</div>
+            <div class="mui--text-dark-secondary post__date">
+                @${post.author}
+            </div>
             <div class="mui--text-dark-secondary post__date">
                 ${new Date(post.date).toLocaleDateString()}
                 ${new Date(post.date).toLocaleTimeString()}

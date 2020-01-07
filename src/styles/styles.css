@@ -2,6 +2,10 @@ body {
   height: auto;
 }
 
+textarea {
+  resize: none;
+}
+
 .subtitle {
   margin: 0;
   margin-top: 0.75rem;
@@ -47,7 +51,7 @@ body {
 }
 
 .modal {
-  max-width: 75vw;
+  max-width: 600px;
   max-height: 75vh;
   margin: 100px auto;
   overflow-y: auto;
@@ -70,12 +74,21 @@ body {
   padding: 0;
 }
 
-@media screen and (max-width: 543px) {
-  body {
-    margin-bottom: 5rem;
-  }
+#login-btn {
+  margin-top: 1rem;
+}
 
-  .modal {
-    max-width: 90vw;
+.btn-blue {
+  background: #1a8c8c;
+}
+
+.btn-blue:hover,
+.btn-blue:focus {
+  background: #006e6e;
+}
+
+@media screen and (max-width: 372px) {
+  #signup {
+    margin-left: 0;
   }
 }
