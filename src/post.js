@@ -17,8 +17,14 @@ export class Post {
     return post
   }
 
-  static renderList() {
-    const allPosts = getPostsFromLocalStorage()
+  static async renderList() {
+    let allPosts
+    const token = localStorage.getItem('epp-mini-blog/token')
+    if (navigator.onLine && token) {
+      allPosts = await Post.fetch(token)
+    } else {
+      allPosts = getPostsFromLocalStorage()
+    }
 
     const html = allPosts.length
       ? allPosts.map(toCard).join('')

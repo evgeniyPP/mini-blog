@@ -42,7 +42,13 @@ function handleInput() {
     !isValid(title.value.trim(), 5, 30) || !isValid(text.value.trim(), 30, 256)
 }
 
-function openModal() {
+async function openModal() {
+  const token = localStorage.getItem('epp-mini-blog/token')
+  if (token) {
+    const data = await Post.fetch(token)
+    return renderModalAfterAuth(data)
+  }
+
   createModal('Необходимо авторизоваться', getAuthFormHTML())
   document
     .getElementById('auth__form')

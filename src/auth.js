@@ -27,5 +27,10 @@ export async function authWithEmailAndPassword(email, password) {
     }
   )
   const data = await res.json()
+
+  if (data.idToken) {
+    localStorage.setItem('epp-mini-blog/token', data.idToken)
+  }
+
   return data.idToken
 }
