@@ -1,0 +1,81 @@
+body {
+  height: auto;
+}
+
+.subtitle {
+  margin: 0;
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.section {
+  margin-top: 1.5rem;
+}
+
+.section .mui-divider {
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.mui-btn {
+  background: #e57373;
+  color: #fff;
+}
+
+.mui-btn:hover,
+.mui-btn:focus {
+  background: #bb4949;
+  color: #fff;
+}
+
+.mui-btn--fab {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  font-size: 1.125rem;
+  font-weight: bold;
+  text-transform: lowercase;
+}
+
+.post {
+  margin-bottom: 1rem;
+}
+
+.post__date {
+  margin: 0.25rem 0;
+}
+
+.modal {
+  max-width: 75vw;
+  max-height: 75vh;
+  margin: 100px auto;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.modal__title {
+  text-align: center;
+}
+
+.modal__content {
+  padding: 1rem;
+}
+
+.error {
+  color: red;
+}
+
+.modal__post-list {
+  padding: 0;
+}
+
+@media screen and (max-width: 543px) {
+  body {
+    margin-bottom: 5rem;
+  }
+
+  .modal {
+    max-width: 90vw;
+  }
+}

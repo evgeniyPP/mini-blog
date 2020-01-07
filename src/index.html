@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Приложение</title>
+</head>
+
+<body>
+    <div id="sidebar">
+        <div class="mui--text-light mui--text-display1 mui--align-vertical">
+            МИНИ / БЛОГ
+            <p class="subtitle">пишите про себя, читайте про других</p>
+        </div>
+    </div>
+    <div id="content" class="mui-container-fluid">
+        <div class="mui-row">
+            <div class="mui-col-sm-10 mui-col-sm-offset-1">
+                <section class="section add-post">
+                    <div class="mui--text-dark-secondary mui--text-body2">
+                        ДОБАВИТЬ МИНИ-ПОСТ
+                    </div>
+                    <div class="mui-divider"></div>
+                    <form class="mui-form" id="new-post__form">
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <input type="text" id="new-post__title" required minlength="5" maxlength="30">
+                            <label for="new-post__title">Заголовок мини-поста</label>
+                        </div>
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <textarea id="new-post__text" required minlength="30" maxlength="256"></textarea>
+                            <label for="new-post__text">Текст мини-поста</label>
+                        </div>
+                        <button type="submit" class="mui-btn mui-btn--raised" id="new-post__submit" disabled>Добавить</button>
+                    </form>
+                </section>
+                <section class="section your-posts">
+                    <div class="mui--text-dark-secondary mui--text-body2">
+                        ВАШИ МИНИ-ПОСТЫ
+                    </div>
+                    <div class="mui-divider"></div>
+                    <div id="posts-list">
+                    </div>
+            </div>
+            </section>
+        </div>
+    </div>
+    </div>
+    <button class="mui-btn mui-btn--fab" id="modal-btn">все</button>
+    <script src="https://cdn.muicss.com/mui-0.10.0/js/mui.min.js"></script>
+</body>
+
+</html>
