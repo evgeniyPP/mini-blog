@@ -14,6 +14,10 @@ export function createModal(title, content) {
   mui.overlay('on', modal)
 }
 
+export function createModalError(message) {
+  createModal('Ошибка', `<h2 class="error">${message}</h2>`)
+}
+
 export function closeModal() {
   const modal = document.querySelector('.modal')
   mui.overlay('off', modal)

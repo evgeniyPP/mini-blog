@@ -1,7 +1,9 @@
 export class Post {
   static async create(post) {
+    const token =
+      JSON.parse(localStorage.getItem('epp-mini-blog/auth')).token || null
     const res = await fetch(
-      'https://mini-blog-d70e8.firebaseio.com/posts.json',
+      `https://mini-blog-d70e8.firebaseio.com/posts.json?auth=${token}`,
       {
         method: 'POST',
         body: JSON.stringify(post),
@@ -17,30 +19,25 @@ export class Post {
   }
 
   static async renderList() {
+    // if online, get post from firebase, else from local storage
     let allPosts
-    const token = localStorage.getItem('epp-mini-blog/token')
-    if (navigator.onLine && token) {
-      allPosts = await Post.fetch(token)
+    if (navigator.onLine) {
+      allPosts = await Post.fetch()
       localStorage.setItem('epp-mini-blog/posts', JSON.stringify(allPosts))
     } else {
-      allPosts = getPostsFromLocalStorage()
+      allPosts = JSON.parse(localStorage.getItem('epp-mini-blog/posts') || '[]')
     }
 
     const html = allPosts.length
       ? allPosts.map(toCard).join('')
-      : `<div class="mui--text-headline">Чтобы читать ленту, войдите в аккаунт или создайте новый</div>`
+      : `<div class="mui--text-headline">Лента не загрузилась. Возможно, проблемы с сетью?</div>`
 
     const list = document.getElementById('posts-list')
     list.innerHTML = html
   }
 
-  static async fetch(token) {
-    if (!token) {
-      return Promise.resolve('<p class="error">Неудача, попробуйте еще раз</p>')
-    }
-    const res = await fetch(
-      `https://mini-blog-d70e8.firebaseio.com/posts.json?auth=${token}`
-    )
+  static async fetch() {
+    const res = await fetch(`https://mini-blog-d70e8.firebaseio.com/posts.json`)
     const data = await res.json()
 
     if (data && data.error) {
@@ -48,10 +45,6 @@ export class Post {
     }
     return data ? Object.keys(data).map(id => ({ ...data[id], id })) : []
   }
-}
-
-function getPostsFromLocalStorage() {
-  return JSON.parse(localStorage.getItem('epp-mini-blog/posts') || '[]')
 }
 
 function toCard(post) {

@@ -2,15 +2,15 @@ export function getAuthFormHTML() {
   return `
     <form class="mui-form" id="auth__form">
         <div class="mui-textfield mui-textfield--float-label">
-            <input type="email" id="auth__email" required>
-            <label for="auth__email">E-mail</label>
+            <input type="text" id="auth__login" required minlength="3" maxlength="15">
+            <label for="auth__login">Логин</label>
         </div>
         <div class="mui-textfield mui-textfield--float-label">
             <input type="password" id="auth__password" required>
             <label for="auth__password">Пароль</label>
         </div>
-        <button type="submit" id="login" class="mui-btn mui-btn--raised">Войти</button>
-        <button type="submit" id="signup" class="mui-btn mui-btn--raised btn-blue">Зарегистрироваться</button>
+        <button type="submit" id="login" class="mui-btn mui-btn--raised" disabled>Войти</button>
+        <button type="submit" id="signup" class="mui-btn mui-btn--raised btn-blue" disabled>Зарегистрироваться</button>
     </form>
     `
 }
@@ -29,7 +29,7 @@ export async function logIn(email, password) {
   )
   const data = await res.json()
   setLocalStorage(data)
-  return data.idToken
+  return data
 }
 
 export async function signUp(email, password) {
@@ -46,15 +46,18 @@ export async function signUp(email, password) {
   )
   const data = await res.json()
   setLocalStorage(data)
-  return data.idToken
+  return data
 }
 
 function setLocalStorage(data) {
   if (data.idToken) {
-    localStorage.setItem('epp-mini-blog/token', data.idToken)
     localStorage.setItem(
-      'epp-mini-blog/author',
-      data.email.replace(/@.*$/i, '')
+      'epp-mini-blog/auth',
+      JSON.stringify({
+        token: data.idToken,
+        author: data.email.replace(/@.*$/i, ''),
+        expirationDate: Date.now()
+      })
     )
   }
 }

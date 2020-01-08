@@ -5,7 +5,9 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Приложение</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico">
+    <title>МИНИ/БЛОГ – пишите про себя, читайте про других</title>
 </head>
 
 <body>
@@ -33,7 +35,7 @@
                             <textarea id="new-post__text" required minlength="30" maxlength="256"></textarea>
                             <label for="new-post__text">Текст мини-поста</label>
                         </div>
-                        <button type="submit" class="mui-btn mui-btn--raised" id="new-post__submit" disabled>Добавить</button>
+                        <button type="submit" class="mui-btn mui-btn--raised" id="new-post__submit" title="Вы должны быть авторизованы, чтобы писать посты" disabled>Добавить</button>
                     </form>
                 </section>
                 <section class="section your-posts">
